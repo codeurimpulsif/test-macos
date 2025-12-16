@@ -7,7 +7,9 @@ jobs:
   build:
     runs-on: macos-15
     steps:
+      - name: check working directory
+        run: ls
       - name: Build Gajim
-        run: ./gajim-macos-helper.sh build
+        run: cd ${GITHUB_WORKSPACE} && bash ${GITHUB_WORKSPACE}/gajim-macos-helper.sh build
       - name: Create Gajim dmg
-        run: ./gajim-macos-helper.sh create-dmg
+        run: cd ${GITHUB_WORKSPACE} && bash ${GITHUB_WORKSPACE}/gajim-macos-helper.sh create-dmg
