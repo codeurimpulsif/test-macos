@@ -8,9 +8,11 @@ jobs:
     runs-on: macos-15
     steps:
       - uses: actions/checkout@v4
-      - name: check working directory
-        run: ls
       - name: Build Gajim
-        run: cd ${GITHUB_WORKSPACE} && bash ${GITHUB_WORKSPACE}/gajim-macos-helper.sh build
+        run: bash ${GITHUB_WORKSPACE}/gajim-macos-helper.sh build
       - name: Create Gajim dmg
-        run: cd ${GITHUB_WORKSPACE} && bash ${GITHUB_WORKSPACE}/gajim-macos-helper.sh create-dmg
+        run: bash ${GITHUB_WORKSPACE}/gajim-macos-helper.sh create-dmg
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gajim.dmg
+          path: ${GITHUB_WORKSPACE}/gajim-source/gajim-*.dmg
