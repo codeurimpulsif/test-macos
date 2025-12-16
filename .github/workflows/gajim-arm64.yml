@@ -1,4 +1,4 @@
-name: Gajim
+name: Gajim arm64
 
 on:
   workflow_dispatch:

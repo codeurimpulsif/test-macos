@@ -1,4 +1,4 @@
-name: Gajim
+name: Gajim x86_64
 
 on:
   workflow_dispatch:
