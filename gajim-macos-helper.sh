@@ -35,6 +35,7 @@ function install_brew_dependencies() {
 	brew unlink libsoup && brew link libsoup@3
 	# Reinstall glib via Brew to avoid missing libgobject (see https://github.com/libvips/ruby-vips/issues/284#issuecomment-2040414765)
 	brew reinstall glib
+	brew unlink glib && brew link glib
 }
 
 function recreate_venv() {
