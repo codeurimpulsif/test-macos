@@ -1,0 +1,18 @@
+name: Gajim
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-15-intel
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build Gajim
+        run: bash gajim-macos-helper.sh build
+      - name: Create Gajim dmg
+        run: bash gajim-macos-helper.sh create-dmg
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gajim-2.4.1.dmg
+          path: gajim-source/gajim-2.4.1.dmg
