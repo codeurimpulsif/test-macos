@@ -1,0 +1,13 @@
+name: Gajim
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-15
+    steps:
+      - name: Build Gajim
+        run: ./gajim-macos-helper.sh build
+      - name: Create Gajim dmg
+        run: ./gajim-macos-helper.sh create-dmg
