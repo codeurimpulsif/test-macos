@@ -17,7 +17,7 @@
  a = Analysis(['launch.py'],
               pathex=[cwd],
 -             binaries=[],
-+             binaries=[('/opt/homebrew/lib/libgtk-4.1.dylib', 'libgtk-4.1.dylib'), ('/opt/homebrew/lib/libgio-2.0.0.dylib', 'libgio-2.0.0.dylib')],
++             binaries=[('/opt/homebrew/lib/libgtk-4.1.dylib', '.'), ('/opt/homebrew/lib/libgio-2.0.0.dylib', '.')],
               datas=[('gajim', 'gajim')],
               hiddenimports=hiddenimports,
               hookspath=[],

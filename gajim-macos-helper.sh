@@ -24,8 +24,15 @@ gajim_git="https://dev.gajim.org/gajim/gajim"
 nbxmpp_git="https://dev.gajim.org/gajim/python-nbxmpp"
 
 # Set PATH and DYLD_LIBRARY_PATH for Brew to use Brew Python version (see https://dev.gajim.org/gajim/gajim/-/issues/12365)
-PATH="/opt/homebrew/bin:$PATH"
-DYLD_LIBRARY_PATH="/opt/homebrew/lib:$DYLD_LIBRARY_PATH"
+if [ "$(uname -m)" == "x86_64" ]
+then
+	PATH="/usr/local/bin:$PATH"
+	DYLD_LIBRARY_PATH="/usr/local/lib:$DYLD_LIBRARY_PATH"
+else
+then
+	PATH="/opt/homebrew/bin:$PATH"
+	DYLD_LIBRARY_PATH="/opt/homebrew/lib:$DYLD_LIBRARY_PATH"
+fi
 
 function install_brew_dependencies() {
 	brew install gettext python@${python_version} librsvg git
@@ -108,7 +115,13 @@ function build_new_environment() {
 }
 
 function patch_dmg_spec() {
-	patch < ./dmg-spec.patch
+	if [ "$(uname -m)" == "x86_64" ]
+	then
+		patch < ./dmg-spec_x86_64.patch
+	else
+	then
+		patch < ./dmg-spec_arm64.patch
+	fi
 }
 
 function create_dmg() {
