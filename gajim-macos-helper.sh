@@ -28,7 +28,7 @@ if [ "$(uname -m)" == "x86_64" ]
 then
 	PATH="/usr/local/bin:$PATH"
 	DYLD_LIBRARY_PATH="/usr/local/lib:$DYLD_LIBRARY_PATH"
-else
+elif [ "$(uname -m)" != "x86_64" ]
 then
 	PATH="/opt/homebrew/bin:$PATH"
 	DYLD_LIBRARY_PATH="/opt/homebrew/lib:$DYLD_LIBRARY_PATH"
@@ -118,7 +118,7 @@ function patch_dmg_spec() {
 	if [ "$(uname -m)" == "x86_64" ]
 	then
 		patch < ./dmg-spec_x86_64.patch
-	else
+	elif [ "$(uname -m)" != "x86_64" ]
 	then
 		patch < ./dmg-spec_arm64.patch
 	fi
