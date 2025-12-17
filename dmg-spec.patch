@@ -1,6 +1,6 @@
 --- gajim-source/mac/gajim.spec	2024-05-22 21:33:20.307106129 +0200
-+++ gajim-source/mac/gajim.spec	2025-12-16 22:41:55.473635277 +0100
-@@ -11,9 +11,12 @@
++++ gajim-source/mac/gajim.spec	2025-12-17 01:19:31.094522619 +0100
+@@ -11,14 +11,17 @@
  }
  
  import sys
@@ -15,3 +15,9 @@
  sys.path.pop(0)
  
  a = Analysis(['launch.py'],
+              pathex=[cwd],
+-             binaries=[],
++             binaries=[('/opt/homebrew/lib/libgtk-4.1.dylib', 'libgtk-4.1.dylib'), ('/opt/homebrew/lib/libgio-2.0.0.dylib', 'libgio-2.0.0.dylib')],
+              datas=[('gajim', 'gajim')],
+              hiddenimports=hiddenimports,
+              hookspath=[],
