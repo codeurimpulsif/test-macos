@@ -23,15 +23,13 @@ python_version="3.13"
 gajim_git="https://dev.gajim.org/gajim/gajim"
 nbxmpp_git="https://dev.gajim.org/gajim/python-nbxmpp"
 
-# Set PATH and DYLD_LIBRARY_PATH for Brew to use Brew Python version (see https://dev.gajim.org/gajim/gajim/-/issues/12365)
+# Set DYLD_LIBRARY_PATH for Brew to use Brew Python version (see https://dev.gajim.org/gajim/gajim/-/issues/12365)
 if [ "$(uname -m)" == "x86_64" ]
 then
-	PATH="/usr/local/bin:$PATH"
-	DYLD_LIBRARY_PATH="/usr/local/lib:$DYLD_LIBRARY_PATH"
+	export DYLD_LIBRARY_PATH="/usr/local/lib:$DYLD_LIBRARY_PATH"
 elif [ "$(uname -m)" != "x86_64" ]
 then
-	PATH="/opt/homebrew/bin:$PATH"
-	DYLD_LIBRARY_PATH="/opt/homebrew/lib:$DYLD_LIBRARY_PATH"
+	export DYLD_LIBRARY_PATH="/opt/homebrew/lib:$DYLD_LIBRARY_PATH"
 fi
 
 function install_brew_dependencies() {
