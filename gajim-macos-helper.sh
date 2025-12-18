@@ -49,7 +49,7 @@ function recreate_venv() {
 	if [ -d "./gajim-venv" ]; then
 		rm -r ./gajim-venv
 	fi
-	python3 -m venv ./gajim-venv
+	python${python_version} -m venv ./gajim-venv
 	source ./gajim-venv/bin/activate
 	pip3 install --upgrade omemo-dr pyobjc cryptography pillow idna precis-i18n certifi css-parser keyring packaging qrcode SQLAlchemy emoji h2 socksio httpx
 	deactivate
