@@ -23,12 +23,16 @@ python_version="3.13"
 gajim_git="https://dev.gajim.org/gajim/gajim"
 nbxmpp_git="https://dev.gajim.org/gajim/python-nbxmpp"
 
-# Set DYLD_LIBRARY_PATH for Brew to use Brew Python version (see https://dev.gajim.org/gajim/gajim/-/issues/12365)
+# Set PATH and DYLD_LIBRARY_PATH for Brew to use Brew Python version (see https://dev.gajim.org/gajim/gajim/-/issues/12365)
+DEFAULT_PATH="$PATH"
+DEFAULT_DYLD_LIBRARY_PATH="$DYLD_LIBRARY_PATH"
 if [ "$(uname -m)" == "x86_64" ]
 then
+	export PATH="/usr/local/bin:$PATH"
 	export DYLD_LIBRARY_PATH="/usr/local/lib:$DYLD_LIBRARY_PATH"
 elif [ "$(uname -m)" != "x86_64" ]
 then
+	export PATH="/opt/homebrew/bin:$PATH"
 	export DYLD_LIBRARY_PATH="/opt/homebrew/lib:$DYLD_LIBRARY_PATH"
 fi
 
@@ -113,13 +117,7 @@ function build_new_environment() {
 }
 
 function patch_dmg_spec() {
-	if [ "$(uname -m)" == "x86_64" ]
-	then
-		patch < ./dmg-spec_x86_64.patch
-	elif [ "$(uname -m)" != "x86_64" ]
-	then
-		patch < ./dmg-spec_arm64.patch
-	fi
+	patch < ./dmg-spec.patch
 }
 
 function create_dmg() {
@@ -165,3 +163,8 @@ function usage()
 }
 
 main "$@"
+
+export DYLD_LIBRARY_PATH="$DEFAULT_DYLD_LIBRARY_PATH"
+export PATH="$DEFAULT_PATH"
+
+exit 0
