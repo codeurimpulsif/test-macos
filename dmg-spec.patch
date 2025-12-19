@@ -1,5 +1,5 @@
---- gajim-source/mac/gajim.spec	2025-12-19 01:27:06.419596987 +0100
-+++ gajim-source/mac/gajim.spec	2025-12-19 01:27:57.504950613 +0100
+--- gajim-source/mac/gajim.spec	2024-05-22 21:33:20.307106129 +0200
++++ gajim-source/mac/gajim.spec	2025-12-20 00:00:06.273901355 +0100
 @@ -11,9 +11,14 @@
  }
  
@@ -17,3 +17,12 @@
  sys.path.pop(0)
  
  a = Analysis(['launch.py'],
+@@ -23,7 +28,7 @@
+              hiddenimports=hiddenimports,
+              hookspath=[],
+              runtime_hooks=[],
+-             excludes=[],
++             excludes=['docutils'],
+              win_no_prefer_redirects=False,
+              win_private_assemblies=False,
+              cipher=block_cipher,
