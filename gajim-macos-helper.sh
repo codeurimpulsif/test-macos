@@ -30,7 +30,7 @@ if [ "$(uname -m)" == "x86_64" ]
 then
 	export PATH="/usr/local/bin:$PATH"
 	export DYLD_LIBRARY_PATH="/usr/local/lib:$DYLD_LIBRARY_PATH"
-elif [ "$(uname -m)" != "x86_64" ]
+elif [ "$(uname -m)" == "arm64" ]
 then
 	export PATH="/opt/homebrew/bin:$PATH"
 	export DYLD_LIBRARY_PATH="/opt/homebrew/lib:$DYLD_LIBRARY_PATH"
