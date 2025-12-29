@@ -1,16 +1,19 @@
 #!/bin/bash
 #
-# Helper script to build virtual environments for nbxmpp and Gajim on Mac OS
+# Helper script to build virtual environments for omemo-dr, nbxmpp and Gajim on Mac OS
 #
 # Requirements for this script:
 # - Brew: Follow installation instructions at https://brew.sh
-# - Bash: Run "brew install bash"
 #
 # Instructions:
-# - Always check the following versions variables (check tags dates on Gitlab to make nbxmpp and Gajim versions match)
+# - Always check the following versions variables (check tags dates on Gitlab to make omemo-dr, nbxmpp and Gajim versions match)
 # - Always execute this script from the directory where it is located (./gajim-macos-helper.sh)
-# - To build (or rebuild) a new version of nbxmpp and Gajim: ./gajim-macos-helper.sh build
+# - To build (or rebuild) a new version of omemo-dr, nbxmpp and Gajim: ./gajim-macos-helper.sh build
 # - To start built version: ./gajim-macos-helper.sh start
+#
+# Instructions for CI mode:
+# - To build (or rebuild) a new version of omemo-dr, nbxmpp and Gajim: ./gajim-macos-helper.sh build ci
+# - To create a dmg file: ./gajim-macos-helper.sh create-dmg ci
 #
 # Note: Bash on MacOS is stuck in version 3.2, so we avoid using recent things in this script
 
@@ -223,12 +226,12 @@ function usage()
 	cat <<- EOS
 		$1: MacOS Helper to build virtual environments and start Gajim
 
-		build		Build nbxmpp and Gajim virtual environments
+		build		Build omemo-dr, nbxmpp and Gajim virtual environments
 		create-dmg	Create Gajim dmg installer
 		start		Start Gajim
-		clean		Delete nbxmpp and Gajim virtual environments
+		clean		Delete omemo-dr, nbxmpp and Gajim virtual environments
 
-		build ci	Build nbxmpp and Gajim system side in CI
+		build ci	Build omemo-dr, nbxmpp and Gajim system side in CI
 		create-dmg ci	Create Gajim dmg installer system side in CI
 	EOS
 }
