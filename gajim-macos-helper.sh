@@ -126,9 +126,9 @@ function build_new_environment() {
 	then
 		python${python_version} -m pip install $python_dependencies --break-system-packages
 		cd ./nbxmpp-source/
-		python${python_version} -m pip install . --break-system-packages
+		python${python_version} -m pip install . --break-system-packages --user
 		cd ../gajim-source/
-		python${python_version} -m pip install . --break-system-packages
+		python${python_version} -m pip install . --break-system-packages --user
 		cd ../
 	fi
 }
