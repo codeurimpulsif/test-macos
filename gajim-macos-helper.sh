@@ -17,8 +17,8 @@
 set -e
 
 # Variables
-gajim_version="2.4.1"
-nbxmpp_version="7.0.0"
+gajim_version="master"
+nbxmpp_version="master"
 python_version="3.13"
 gajim_git="https://dev.gajim.org/gajim/gajim"
 nbxmpp_git="https://dev.gajim.org/gajim/python-nbxmpp"
