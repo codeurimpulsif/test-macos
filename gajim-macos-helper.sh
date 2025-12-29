@@ -19,10 +19,27 @@ set -e
 # Variables
 gajim_version="master"
 nbxmpp_version="master"
+omemo_dr_version="master"
 python_version="3.13"
 gajim_git="https://dev.gajim.org/gajim/gajim"
 nbxmpp_git="https://dev.gajim.org/gajim/python-nbxmpp"
-python_dependencies="omemo-dr pyobjc cryptography pillow idna precis-i18n certifi css-parser keyring packaging qrcode SQLAlchemy emoji h2 socksio httpx"
+omemo_dr_git="https://dev.gajim.org/gajim/omemo-dr"
+python_dependencies="\
+	pyobjc \
+	cryptography \
+	pillow \
+	idna \
+	precis-i18n \
+	certifi \
+	css-parser \
+	keyring \
+	packaging \
+	qrcode \
+	SQLAlchemy \
+	emoji \
+	h2 \
+	socksio \
+	httpx"
 
 # Set PATH and DYLD_LIBRARY_PATH for Brew to use Brew Python version (see https://dev.gajim.org/gajim/gajim/-/issues/12365)
 DEFAULT_PATH="$PATH"
@@ -69,13 +86,27 @@ function clone_source() {
 	if [ -d "./nbxmpp-source" ]; then
 		rm -rf ./nbxmpp-source
 	fi
+	if [ -d "./omemo-dr-source" ]; then
+		rm -rf ./omemo-dr-source
+	fi
 	git clone ${gajim_git} ./gajim-source
 	git clone ${nbxmpp_git} ./nbxmpp-source
+	git clone ${omemo_dr_git} ./omemo-dr-source
 	cd ./nbxmpp-source/
 	git checkout ${nbxmpp_version}
 	cd ../gajim-source/
 	git checkout ${gajim_version}
+	cd ../omemo-dr-source/
+	git checkout ${omemo_dr_version}
 	cd ../
+}
+
+function install_omemo_dr() {
+	source ./gajim-venv/bin/activate
+	cd ./omemo-dr-source/
+	pip3 install .
+	cd ../
+	deactivate
 }
 
 function install_nbxmpp() {
@@ -108,6 +139,9 @@ function clean_environment() {
 	if [ -d "./nbxmpp-source" ]; then
 		rm -rf ./nbxmpp-source
 	fi
+	if [ -d "./omemo-dr-source" ]; then
+		rm -rf ./omemo-dr-source
+	fi
 	if [ -d "./gajim-venv" ]; then
 		rm -r ./gajim-venv
 	fi
@@ -119,12 +153,15 @@ function build_new_environment() {
 	if [ "$CI_BUILD" == 0 ]
 	then
 		recreate_venv
+		install_omemo_dr
 		install_nbxmpp
 		install_gajim
 	elif [ "$CI_BUILD" == 1 ]
 	then
 		python${python_version} -m pip install $python_dependencies --break-system-packages
-		cd ./nbxmpp-source/
+		cd ./omemo-dr-source/
+		python${python_version} -m pip install . --break-system-packages
+		cd ../nbxmpp-source/
 		python${python_version} -m pip install . --break-system-packages
 		cd ../gajim-source/
 		python${python_version} -m pip install . --break-system-packages
@@ -185,7 +222,7 @@ function usage()
 {
 	cat <<- EOS
 		$1: MacOS Helper to build virtual environments and start Gajim
-		
+
 		build		Build nbxmpp and Gajim virtual environments
 		create-dmg	Create Gajim dmg installer
 		start		Start Gajim
