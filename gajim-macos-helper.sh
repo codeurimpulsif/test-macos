@@ -22,6 +22,7 @@ nbxmpp_version="7.0.0"
 python_version="3.13"
 gajim_git="https://dev.gajim.org/gajim/gajim"
 nbxmpp_git="https://dev.gajim.org/gajim/python-nbxmpp"
+python_dependencies="omemo-dr pyobjc cryptography pillow idna precis-i18n certifi css-parser keyring packaging qrcode SQLAlchemy emoji h2 socksio httpx"
 
 # Set PATH and DYLD_LIBRARY_PATH for Brew to use Brew Python version (see https://dev.gajim.org/gajim/gajim/-/issues/12365)
 DEFAULT_PATH="$PATH"
@@ -35,6 +36,7 @@ then
 	export PATH="/opt/homebrew/bin:$PATH"
 	export DYLD_LIBRARY_PATH="/opt/homebrew/lib:$DYLD_LIBRARY_PATH"
 fi
+export CI_BUILD=0
 
 function install_brew_dependencies() {
 	brew install gettext python@${python_version} librsvg git
@@ -45,6 +47,10 @@ function install_brew_dependencies() {
 	# Reinstall glib via Brew to avoid missing libgobject (see https://github.com/libvips/ruby-vips/issues/284#issuecomment-2040414765)
 	brew reinstall glib
 	brew unlink glib && brew link glib
+	if [ "$CI_BUILD" == 1 ]
+	then
+		brew install PyInstaller
+	fi
 }
 
 function recreate_venv() {
@@ -53,7 +59,7 @@ function recreate_venv() {
 	fi
 	python${python_version} -m venv ./gajim-venv
 	source ./gajim-venv/bin/activate
-	pip3 install --upgrade omemo-dr pyobjc cryptography pillow idna precis-i18n certifi css-parser keyring packaging qrcode SQLAlchemy emoji h2 socksio httpx
+	pip3 install --upgrade $python_dependencies
 	deactivate
 }
 
@@ -110,10 +116,21 @@ function clean_environment() {
 
 function build_new_environment() {
 	install_brew_dependencies
-	recreate_venv
 	clone_source
-	install_nbxmpp
-	install_gajim
+	if [ "$CI_BUILD" == 0 ]
+	then
+		recreate_venv
+		install_nbxmpp
+		install_gajim
+	elif [ "$CI_BUILD" == 1 ]
+	then
+		pip3 install --break-system-packages $python_dependencies
+		cd ./nbxmpp-source/
+		python3 -m pip install . --break-system-packages
+		cd ./gajim-source/
+		python3 -m pip install . --break-system-packages
+		cd ../
+	fi
 }
 
 function patch_dmg_spec() {
@@ -131,6 +148,12 @@ function create_dmg() {
 
 function main()
 {
+	# CI
+	if [ "$2" == "ci" ]
+	then
+		export CI_BUILD=1
+	fi
+	# Selector
 	if [ -z "$1" ]
 	then
 		usage "$0"
@@ -159,6 +182,9 @@ function usage()
 		create-dmg	Create Gajim dmg installer
 		start		Start Gajim
 		clean		Delete nbxmpp and Gajim virtual environments
+
+		build ci	Build nbxmpp and Gajim system side in CI
+		create-dmg ci	Create Gajim dmg installer system side in CI
 	EOS
 }
 
