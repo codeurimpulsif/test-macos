@@ -1,6 +1,6 @@
 --- gajim-source/mac/gajim.spec	2025-12-29 17:09:50.648185526 +0100
-+++ gajim-source/mac/gajim.spec	2025-12-29 17:27:15.714123967 +0100
-@@ -12,6 +12,24 @@
++++ gajim-source/mac/gajim.spec	2025-12-29 17:33:09.938062870 +0100
+@@ -12,6 +12,23 @@
  
  import sys
  import glob
@@ -13,7 +13,6 @@
 +	lib_path = '/usr/local/lib/'
 +elif platform.machine() == 'arm64':
 +	lib_path = '/opt/homebrew/lib/'
-+fi
 +
 +hidden_binaries = []
 +
@@ -25,7 +24,7 @@
  
  sys.path.insert(0, os.path.join(cwd))
  
-@@ -23,7 +41,7 @@
+@@ -23,7 +40,7 @@
  
  a = Analysis(['launch.py'],
               pathex=[cwd],
