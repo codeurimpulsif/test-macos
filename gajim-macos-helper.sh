@@ -47,10 +47,6 @@ function install_brew_dependencies() {
 	# Reinstall glib via Brew to avoid missing libgobject (see https://github.com/libvips/ruby-vips/issues/284#issuecomment-2040414765)
 	brew reinstall glib
 	brew unlink glib && brew link glib
-	if [ "$CI_BUILD" == 1 ]
-	then
-		brew install PyInstaller
-	fi
 }
 
 function recreate_venv() {
@@ -126,9 +122,9 @@ function build_new_environment() {
 	then
 		python${python_version} -m pip install $python_dependencies --break-system-packages
 		cd ./nbxmpp-source/
-		python${python_version} -m pip install . --break-system-packages --user
+		python${python_version} -m pip install . --break-system-packages
 		cd ../gajim-source/
-		python${python_version} -m pip install . --break-system-packages --user
+		python${python_version} -m pip install . --break-system-packages
 		cd ../
 	fi
 }
@@ -148,6 +144,7 @@ function create_dmg() {
 		deactivate
 	elif [ "$CI_BUILD" == 1 ]
 	then
+		python${python_version} -m pip install PyInstaller --break-system-packages
 		cd ./gajim-source/
 		./mac/makebundle.py
 		cd ../
