@@ -138,12 +138,20 @@ function patch_dmg_spec() {
 }
 
 function create_dmg() {
-	source ./gajim-venv/bin/activate
-	pip3 install --upgrade PyInstaller
-	cd ./gajim-source/
-	./mac/makebundle.py
-	cd ../
-	deactivate
+	if [ "$CI_BUILD" == 0 ]
+	then
+		source ./gajim-venv/bin/activate
+		pip3 install --upgrade PyInstaller
+		cd ./gajim-source/
+		./mac/makebundle.py
+		cd ../
+		deactivate
+	elif [ "$CI_BUILD" == 1 ]
+	then
+		cd ./gajim-source/
+		./mac/makebundle.py
+		cd ../
+	fi
 }
 
 function main()
