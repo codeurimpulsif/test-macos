@@ -1,6 +1,6 @@
 --- gajim-source/mac/gajim.spec	2025-12-29 17:09:50.648185526 +0100
-+++ gajim-source/mac/gajim.spec	2025-12-29 17:33:09.938062870 +0100
-@@ -12,6 +12,23 @@
++++ gajim-source/mac/gajim.spec	2025-12-29 17:41:32.048140381 +0100
+@@ -12,6 +12,25 @@
  
  import sys
  import glob
@@ -17,14 +17,16 @@
 +hidden_binaries = []
 +
 +for lib_name in hidden_libs:
-+	lib_file = glob.glob(lib_path + lib_name)
++	lib_file = glob.glob(lib_path + lib_name)[-1]
 +	print("LIB FOUND:", lib_file)
 +	hidden_binaries.append((lib_file, '.'))
++
++print("HIDDEN BINARIES:", hidden_binaries)
 +
  
  sys.path.insert(0, os.path.join(cwd))
  
-@@ -23,7 +40,7 @@
+@@ -23,7 +42,7 @@
  
  a = Analysis(['launch.py'],
               pathex=[cwd],
