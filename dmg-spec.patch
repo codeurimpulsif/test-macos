@@ -1,14 +1,15 @@
 --- gajim-source/mac/gajim.spec	2025-12-29 17:09:50.648185526 +0100
-+++ gajim-source/mac/gajim.spec	2025-12-29 17:41:32.048140381 +0100
-@@ -12,6 +12,25 @@
++++ gajim-source/mac/gajim.spec	2025-12-29 17:49:23.723384472 +0100
+@@ -12,6 +12,26 @@
  
  import sys
  import glob
 +import platform
 +
++# Hidden libs to add because we remove PIL._imagingft to avoid non-system versions
 +hidden_libs = ['libsoup-*.dylib', 'libgtksourceview-*.dylib']
 +
-+# Get system arch
++# Get homebrew lib path according to system arch
 +if platform.machine() == 'x86_64':
 +	lib_path = '/usr/local/lib/'
 +elif platform.machine() == 'arm64':
@@ -26,7 +27,7 @@
  
  sys.path.insert(0, os.path.join(cwd))
  
-@@ -23,7 +42,7 @@
+@@ -23,12 +43,12 @@
  
  a = Analysis(['launch.py'],
               pathex=[cwd],
@@ -35,3 +36,9 @@
               datas=[('gajim', 'gajim')],
               hiddenimports=hiddenimports,
               hookspath=[],
+              runtime_hooks=[],
+-             excludes=[],
++             excludes=['PIL._imagingft'],
+              win_no_prefer_redirects=False,
+              win_private_assemblies=False,
+              cipher=block_cipher,
