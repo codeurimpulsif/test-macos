@@ -124,11 +124,11 @@ function build_new_environment() {
 		install_gajim
 	elif [ "$CI_BUILD" == 1 ]
 	then
-		pip3 install $python_dependencies --break-system-packages
+		python${python_version} -m pip install $python_dependencies --break-system-packages
 		cd ./nbxmpp-source/
-		python3 -m pip install . --break-system-packages
+		python${python_version} -m pip install . --break-system-packages
 		cd ./gajim-source/
-		python3 -m pip install . --break-system-packages
+		python${python_version} -m pip install . --break-system-packages
 		cd ../
 	fi
 }
