@@ -9,10 +9,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Build Gajim
-        run: bash gajim-macos-helper.sh build
+        run: bash gajim-macos-helper.sh build ci
       - name: Create Gajim dmg
-        run: bash gajim-macos-helper.sh create-dmg
+        run: bash gajim-macos-helper.sh create-dmg ci
       - uses: actions/upload-artifact@v4
         with:
-          name: gajim-2.4.1.dmg
-          path: gajim-source/gajim-2.4.1.dmg
+          name: gajim-arm64.dmg
+          path: gajim-source/gajim-*.dmg
