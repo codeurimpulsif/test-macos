@@ -17,12 +17,14 @@ jobs:
           password: ${{ secrets.ftp_password }}
           src: test/gajim-*.dmg
           dest: ./macos/
-      - name: Upload files to FTP
-        uses: matteodf/lftp-upload@v1
+      - name: Upload
+        id: upload
+        uses: kaven-universe/github-action-ftp-upload-file@v1
         with:
-            host: tardis.lithio.fr
-            username: ${{ secrets.ftp_user }}
-            password: ${{ secrets.ftp_password }}
-            forceSsl: "true"
-            localDir: "./test/gajim-*.dmg"
-            remoteDir: "./macos/"
+          host: tardis.lithio.fr
+          port: 21
+          user: ${{ secrets.ftp_user }}
+          password: ${{ secrets.ftp_password }}
+          secure: true
+          file: "test/gajim-*.dmg"
+          cwd: 'macos/'
