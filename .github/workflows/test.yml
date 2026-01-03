@@ -1,0 +1,21 @@
+name: Test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+      - name: Upload artifact
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
+        with:
+          server: tardis.lithio.fr
+          protocol: ftps
+          username: ${{ secrets.ftp_user }}
+          password: ${{ secrets.ftp_password }}
+          server-dir: ./macos/
+          exclude: |
+           **
+           ! gajim-*.sh
