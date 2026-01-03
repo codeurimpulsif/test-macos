@@ -11,11 +11,13 @@ jobs:
       - name: Upload artifact
         uses: SamKirkland/FTP-Deploy-Action@v4.3.6
         with:
+          log-level: verbose
           server: tardis.lithio.fr
           protocol: ftps
           username: ${{ secrets.ftp_user }}
           password: ${{ secrets.ftp_password }}
           server-dir: ./macos/
+          local-dir: ./test/
           exclude: |
            **
-           ! test/gajim-*.sh
+           ! gajim-*.dmg
