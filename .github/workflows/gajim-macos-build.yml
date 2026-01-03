@@ -1,0 +1,31 @@
+name: Gajim MacOS Nightly Build
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 1 * * *"
+
+jobs:
+  arm64:
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build Gajim
+        run: bash gajim-macos-helper.sh build ci
+      - name: Create Gajim dmg
+        run: bash gajim-macos-helper.sh create-dmg ci
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gajim-arm64.dmg
+          path: gajim-source/gajim-*.dmg
+      - name: Upload artifact
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
+        with:
+          server: tardis.lithio.fr
+          protocol: ftps
+          username: ${{ secrets.ftp_user }}
+          password: ${{ secrets.ftp_password }}
+          server-dir: ./macos/
+          exclude: |
+           **
+           ! gajim-source/gajim-*.dmg
