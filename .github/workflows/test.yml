@@ -9,8 +9,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: curl which
-        run: "PATH=$PATH:/opt/homebrew/bin which curl"
+        run: "PATH=/opt/homebrew/opt/curl/bin:$PATH which curl"
       - name: curl version
-        run: "PATH=$PATH:/opt/homebrew/bin curl --version"
+        run: "PATH=/opt/homebrew/opt/curl/bin:$PATH curl --version"
       - name: Upload with curl
-        run: "PATH=$PATH:/opt/homebrew/bin curl -T test/gajim-*.dmg --ssl-reqd ftp://${{ secrets.ftp_user }}:${{ secrets.ftp_password }}@tardis.lithio.fr/./macos/"
+        run: "PATH=/opt/homebrew/opt/curl/bin:$PATH curl -T test/gajim-*.dmg --ssl-reqd ftp://${{ secrets.ftp_user }}:${{ secrets.ftp_password }}@tardis.lithio.fr/./macos/"
