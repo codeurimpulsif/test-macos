@@ -15,5 +15,5 @@ jobs:
           host: tardis.lithio.fr
           user: ${{ secrets.ftp_user }}
           password: ${{ secrets.ftp_password }}
-          src: gajim-source/gajim-*.dmg
+          src: test/gajim-*.dmg
           dest: ./macos/
