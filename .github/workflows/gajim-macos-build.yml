@@ -15,17 +15,7 @@ jobs:
       - name: Create Gajim dmg
         run: bash gajim-macos-helper.sh create-dmg ci
       - name: Upload dmg file via FTPS
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
-        with:
-          server: tardis.lithio.fr
-          protocol: ftps
-          username: ${{ secrets.ftp_user }}
-          password: ${{ secrets.ftp_password }}
-          local-dir: ./gajim-source/
-          server-dir: ./macos/
-          exclude: |
-           **
-           ! gajim-*.dmg
+        run: "PATH=/opt/homebrew/opt/curl/bin:$PATH curl -T test/gajim-*.dmg --ssl-reqd ftp://${{ secrets.ftp_user }}:${{ secrets.ftp_password }}@tardis.lithio.fr/./macos/arm64/"
   x86_64:
     runs-on: macos-15-intel
     steps:
@@ -35,14 +25,4 @@ jobs:
       - name: Create Gajim dmg
         run: bash gajim-macos-helper.sh create-dmg ci
       - name: Upload dmg file via FTPS
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
-        with:
-          server: tardis.lithio.fr
-          protocol: ftps
-          username: ${{ secrets.ftp_user }}
-          password: ${{ secrets.ftp_password }}
-          local-dir: ./gajim-source/
-          server-dir: ./macos/
-          exclude: |
-           **
-           ! gajim-*.dmg
+        run: "PATH=/opt/homebrew/opt/curl/bin:$PATH curl -T test/gajim-*.dmg --ssl-reqd ftp://${{ secrets.ftp_user }}:${{ secrets.ftp_password }}@tardis.lithio.fr/./macos/x86_64/"
