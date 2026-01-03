@@ -17,3 +17,13 @@ jobs:
           password: ${{ secrets.ftp_password }}
           src: test/gajim-*.dmg
           dest: ./macos/
+      - name: "Deploy"
+        uses: milanmk/actions-file-deployer@master
+        with:
+          remote-protocol: "ftp"
+          remote-host: "tardis.lithio.fr"
+          remote-user: ${{ secrets.ftp_user }}
+          remote-password: ${{ secrets.ftp_password }}
+          local-path: './test/'
+          remote-path: "./macos/"
+          sync: full
