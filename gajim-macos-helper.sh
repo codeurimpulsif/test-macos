@@ -172,10 +172,6 @@ function build_new_environment() {
 	fi
 }
 
-function patch_dmg_spec() {
-	patch < ./dmg-spec.patch
-}
-
 function create_dmg() {
 	if [ "$CI_BUILD" == 0 ]
 	then
@@ -210,7 +206,6 @@ function main()
 		build_new_environment
 	elif [ "$1" == "create-dmg" ]
 	then
-		patch_dmg_spec
 		create_dmg
 	elif [ "$1" == "start" ]
 	then
