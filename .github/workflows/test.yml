@@ -8,9 +8,7 @@ jobs:
     runs-on: macos-14
     steps:
       - uses: actions/checkout@v4
-      - name: brew curl
-        run: "brew install curl"
       - name: curl version
-        run: "curl --version"
+        run: "/usr/local/opt/curl/bin/curl --version"
       - name: Upload with curl
-        run: "curl -T test/gajim-*.dmg --ssl-reqd ftp://${{ secrets.ftp_user }}:${{ secrets.ftp_password }}@tardis.lithio.fr/./macos/"
+        run: "/usr/local/opt/curl/bin/curl -T test/gajim-*.dmg --ssl-reqd ftp://${{ secrets.ftp_user }}:${{ secrets.ftp_password }}@tardis.lithio.fr/./macos/"
