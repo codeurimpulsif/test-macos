@@ -8,24 +8,11 @@ jobs:
     runs-on: macos-14
     steps:
       - uses: actions/checkout@v4
-      - name: Upload
-        id: upload
-        uses: kaven-universe/github-action-ftp-upload-file@v1
+      - name: Upload ftp
+        uses: sebastianpopp/ftp-action@releases/v2
         with:
           host: tardis.lithio.fr
-          port: 21
           user: ${{ secrets.ftp_user }}
           password: ${{ secrets.ftp_password }}
-          secure: true
-          file: "test/gajim-*.dmg"
-          cwd: '~/macos/'
-      - name: FTP Deploy
-        uses: lujiaying/FTP-Deploy-Action-Py3.9@v1.0
-        with:
-          host: tardis.lithio.fr
-          user: ${{ secrets.ftp_user }}
-          passwd: ${{ secrets.ftp_password }}
-          port: 21
-          local_dir: ./test/
-          remote_dir: ./macos/
-          dry_run: False
+          localDir: "test"
+          remoteDir: "macos"
