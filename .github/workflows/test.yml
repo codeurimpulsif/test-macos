@@ -8,5 +8,7 @@ jobs:
     runs-on: macos-14
     steps:
       - uses: actions/checkout@v4
+      - name: curl version
+        run: "curl --version"
       - name: Upload with curl
         run: "curl -T test/gajim-*.dmg --ssl-reqd ftp://${{ secrets.ftp_user }}:${{ secrets.ftp_password }}@tardis.lithio.fr/./macos/"
