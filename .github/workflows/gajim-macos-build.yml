@@ -14,8 +14,6 @@ jobs:
         run: bash gajim-macos-helper.sh build ci
       - name: Create Gajim dmg
         run: bash gajim-macos-helper.sh create-dmg ci
-      - name: Go in gajim-source directory
-        run: cd gajim-source/
       - name: Upload dmg file via FTPS
         uses: SamKirkland/FTP-Deploy-Action@v4.3.6
         with:
@@ -23,6 +21,7 @@ jobs:
           protocol: ftps
           username: ${{ secrets.ftp_user }}
           password: ${{ secrets.ftp_password }}
+          local-dir: ./gajim-source/
           server-dir: ./macos/
           exclude: |
            **
@@ -35,8 +34,6 @@ jobs:
         run: bash gajim-macos-helper.sh build ci
       - name: Create Gajim dmg
         run: bash gajim-macos-helper.sh create-dmg ci
-      - name: Go in gajim-source directory
-        run: cd gajim-source/
       - name: Upload dmg file via FTPS
         uses: SamKirkland/FTP-Deploy-Action@v4.3.6
         with:
@@ -44,6 +41,7 @@ jobs:
           protocol: ftps
           username: ${{ secrets.ftp_user }}
           password: ${{ secrets.ftp_password }}
+          local-dir: ./gajim-source/
           server-dir: ./macos/
           exclude: |
            **
