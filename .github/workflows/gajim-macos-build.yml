@@ -14,11 +14,26 @@ jobs:
         run: bash gajim-macos-helper.sh build ci
       - name: Create Gajim dmg
         run: bash gajim-macos-helper.sh create-dmg ci
-      - uses: actions/upload-artifact@v4
+      - name: Upload dmg file via FTPS
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
         with:
-          name: gajim-arm64.dmg
-          path: gajim-source/gajim-*.dmg
-      - name: Upload artifact
+          server: tardis.lithio.fr
+          protocol: ftps
+          username: ${{ secrets.ftp_user }}
+          password: ${{ secrets.ftp_password }}
+          server-dir: ./macos/
+          exclude: |
+           **
+           ! gajim-source/gajim-*.dmg
+  x86_64:
+    runs-on: macos-15-intel
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build Gajim
+        run: bash gajim-macos-helper.sh build ci
+      - name: Create Gajim dmg
+        run: bash gajim-macos-helper.sh create-dmg ci
+      - name: Upload dmg file via FTPS
         uses: SamKirkland/FTP-Deploy-Action@v4.3.6
         with:
           server: tardis.lithio.fr
