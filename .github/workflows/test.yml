@@ -17,13 +17,12 @@ jobs:
           password: ${{ secrets.ftp_password }}
           src: test/gajim-*.dmg
           dest: ./macos/
-      - name: "Deploy"
-        uses: milanmk/actions-file-deployer@master
+      - name: Upload files to FTP
+        uses: matteodf/lftp-upload@v1
         with:
-          remote-protocol: "ftp"
-          remote-host: "tardis.lithio.fr"
-          remote-user: ${{ secrets.ftp_user }}
-          remote-password: ${{ secrets.ftp_password }}
-          local-path: './test/'
-          remote-path: "./macos/"
-          sync: full
+            host: tardis.lithio.fr
+            username: ${{ secrets.ftp_user }}
+            password: ${{ secrets.ftp_password }}
+            forceSsl: "true"
+            localDir: "./test/gajim-*.dmg"
+            remoteDir: "./macos/"
