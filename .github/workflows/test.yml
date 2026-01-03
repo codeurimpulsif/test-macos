@@ -21,3 +21,11 @@ jobs:
           exclude: |
            **
            ! gajim-*.dmg
+      - name: Upload bundle
+        uses: nerdoza/action-simple-file-upload@v2
+        with:
+          user: ${{ secrets.ftp_user }}
+          password: ${{ secrets.ftp_password }}
+          host: tardis.lithio.fr
+          src: gajim-source/gajim-*.dmg
+          dest: ./macos/
