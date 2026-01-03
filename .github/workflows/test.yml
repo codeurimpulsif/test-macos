@@ -13,4 +13,4 @@ jobs:
       - name: curl version
         run: "PATH=/opt/homebrew/opt/curl/bin:$PATH curl --version"
       - name: Upload with curl
-        run: "PATH=/opt/homebrew/opt/curl/bin:$PATH curl -T test/gajim-*.dmg --ssl-reqd ftp://${{ secrets.ftp_user }}:${{ secrets.ftp_password }}@tardis.lithio.fr/./macos/"
+        run: "PATH=/opt/homebrew/opt/curl/bin:$PATH curl -T test/gajim-*.dmg --ssl-reqd ftp://${{ secrets.ftp_user }}:${{ secrets.ftp_password }}@tardis.lithio.fr/./macos/arm64/"
