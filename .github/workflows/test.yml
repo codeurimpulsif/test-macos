@@ -8,11 +8,5 @@ jobs:
     runs-on: macos-14
     steps:
       - uses: actions/checkout@v4
-      - name: Upload ftp
-        uses: sebastianpopp/ftp-action@releases/v2
-        with:
-          host: tardis.lithio.fr
-          user: ${{ secrets.ftp_user }}
-          password: ${{ secrets.ftp_password }}
-          localDir: "test"
-          remoteDir: "macos"
+      - name: Upload with curl
+        run: "curl -T test/gajim-*.dmg --ssl ftp://${{ secrets.ftp_user }}:${{ secrets.ftp_password }}@tardis.lithio.fr/./macos/"
