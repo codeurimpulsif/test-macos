@@ -12,5 +12,8 @@ jobs:
         run: "PATH=/opt/homebrew/opt/curl/bin:$PATH which curl"
       - name: curl version
         run: "PATH=/opt/homebrew/opt/curl/bin:$PATH curl --version"
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
       - name: Upload with curl
-        run: "PATH=/opt/homebrew/opt/curl/bin:$PATH curl -T test/gajim-*.dmg --ssl-reqd ftp://${{ secrets.ftp_user }}:${{ secrets.ftp_password }}@tardis.lithio.fr/./macos/Gajim-Nightly-$(date --rfc-3339=date).dmg"
+        run: "PATH=/opt/homebrew/opt/curl/bin:$PATH curl -T test/gajim-*.dmg --ssl-reqd ftp://${{ secrets.ftp_user }}:${{ secrets.ftp_password }}@tardis.lithio.fr/./macos/Gajim-Nightly-${{ steps.date.outputs.date }}.dmg"
