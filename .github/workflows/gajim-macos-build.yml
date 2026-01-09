@@ -2,8 +2,6 @@ name: Gajim MacOS Nightly Build
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "0 1 * * *"
 
 jobs:
   arm64:
